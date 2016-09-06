@@ -14,35 +14,22 @@ jq(function(){
     });
 });
 </script>
-<div class="camera-wrapper">
-    <div id="camera" class="camera-wrap">
-    <?php foreach($slider_result as $row)
-	{
-		
-		?>
-        <div data-src="<?php echo base_url('assets/public/images/'.$row->image)?>" data-alignment="center">
-            <div class="fadeIn camera_caption">
-                <h2 class="text_1 color_1"><?php echo $row->image_text; ?></h2>
-                <a class="btn_1" href="#">More info</a>
-            </div>
-        </div>
-        <?php
-	}
-		?>
-        
-    </div>
-</div>
+
 <?php
-	$heading=$home_body[0]->heading;
-	$body=$home_body[0]->body;
-	$bgi=$bgi[0]->image;
+		$name=$pdf[0]['name'];
+		$pdf_file=$pdf[0]['pdf_file'];
+		$slug=$pdf[0]['slug'];
+		$id=$pdf[0]['id'];
+		
+		
+		//$qll=$ql[0]['slug'];
 ?>
 <div class="bg_1 wrap_2 wrap_4" style="width: 77%;float: left;">
     <div class="container" style="width:100%; float:left;">
         <div class="row">
             <div class="preffix_2 grid_8" style="margin-left:0px; padding-left:30px; width:100%;">
                 <h2 class="header_1 wrap_3 color_3" style="padding-left: 6%; text-align: left;">
-                    <?php echo $heading; ?>
+                    <?php echo $name; ?>
                 </h2>
             </div>
         </div>
@@ -50,29 +37,14 @@ jq(function(){
             <div class="grid_12" style="width:94%; float:left;">
                 <div class="box_1" style="padding-left:6%;">
                     <p class="text_3" style="text-align: justify;padding-left: 16px;padding-right: 33px;">
-                        <section class="bodySection"><?php echo $body; ?></section>
+                        <section class="bodySection">
+                        	<object data="<?php echo base_url('assets/admin/pdfs/'.$pdf_file);?>" type="application/pdf" width="100%" height="1200px">
+  									<p>Alternative text - include a link <a href="myfile.pdf">to the PDF!</a></p>
+							</object>
+                        </section>
                     </p>
                 </div>
-                 <div class="box_1" style="padding-left:6%;">
-                 	<div id="ourServices_container" style="background:url(<?php echo base_url('assets/public/images/').$bgi ;?>); background-size: cover;">
-                    <?php foreach($os as $o)
-							{
-								?>
-                                <div class="flip"> 
-                                    <div class="front" style="background: rgba(0, 0, 0, 0.38);"> 
-                                        <?php echo $o->service;?>
-                                    </div> 
-                                    <div class="back">
-                                    	<h4>Click</h4>
-                                        <h3><a href="<?php echo $o->url;?>"><?php echo $o->service;?></a></h3>
-                                    </div> 
-                                </div>
-                                <?php	
-							}
-					?>
-                    	
-                    </div>
-                 </div>
+                 
             </div>
         </div>
     </div>
@@ -80,11 +52,12 @@ jq(function(){
 
 <!--right sidebar-->
 <div class="bg_1 wrap_2 wrap_4" style="width: 23%;float: left;">
+
     <div class="container" style="width:100%; float:left; padding-right: 12%; padding-bottom: 24px;border-left: 1px solid #00abe3;">
         <div class="row" style="margin-left:0;">
             <div class="preffix_2 grid_8" style="margin-left:0px; padding-left:0px; width:100%;">
                 <h2 class="header_1 color_1" style="background-color: #00abe3;font-size: 22px; line-height: 36px; ">
-                    Key Offerings
+                    Other Resources
                 </h2>
             </div>
         </div>
@@ -94,15 +67,26 @@ jq(function(){
                     <p class="text_3" style="text-align: justify;padding-left: 16px;padding-right: 33px;">
                      <ul>
                         <?php
-                        	foreach($other_offering as $oo)
+						
+                        	foreach($RA_all_pdf as $p)
 							{
+								
+								if(($id)==($p['id']))
+								{
 								?>
                                
-                                	<li style="text-align: left;padding-left: 24px;float:left;width:75%;"><a href="<?php echo site_url('page/load_key_offerings/'.$oo->slug); ?>" style="display: block;font-size: 11px;"><?php echo $oo->name; ?></a><div class="bottom_highlight"></div></li>
+                                	<li style="text-align: left;padding-left: 24px;float:left;width:75%;"><a href="<?php echo site_url("/Resources/PDF/".$p['slug']); ?>" style="display: block;font-size: 10px; font-weight:bold;"><?php echo $p['name']; ?></a><div class="bottom_highlight"></div></li>
                                     
                                 
                                 <?php
+								}
+								else{
+									?>
+                                    <li style="text-align: left;padding-left: 24px;float:left;width:75%;"><a href="<?php echo site_url("/Resources/PDF/".$p['slug']); ?>" style="display: block;font-size: 11px;"><?php echo $p['name']; ?></a><div class="bottom_highlight"></div></li>
+                                    <?php
+								}
 							}
+						
 						?>
                         </ul>
                     </p>
@@ -110,37 +94,8 @@ jq(function(){
             </div>
         </div>
     </div>
+  
     
-    <div class="container" style="width:100%; float:left; padding-right: 12%; padding-bottom: 24px;border-left: 1px solid #00abe3;">
-        <div class="row" style="margin-left:0;">
-            <div class="preffix_2 grid_8" style="margin-left:0px; padding-left:0px; width:100%;">
-                <h2 class="header_1 color_1" style="background-color: #00abe3;font-size: 22px; line-height: 36px; ">
-                    Registration Services
-                </h2>
-            </div>
-        </div>
-        <div class="row">
-            <div class="grid_12" style="width:100%; float:left;">
-                <div class="box_1">
-                    <p class="text_3" style="text-align: justify;padding-left: 16px;padding-right: 33px;">
-                     <ul>
-                        <?php
-                        	foreach($registration_services as $rs)
-							{
-								?>
-                               
-                                	<li style="text-align: left;padding-left: 24px;float:left;width:75%;"><a href="<?php echo site_url('page/load_registration_services/'.$rs->slug); ?>" style="display: block;font-size: 11px;"><?php echo $rs->name; ?></a><div class="bottom_highlight"></div></li>
-                                    
-                                
-                                <?php
-							}
-						?>
-                        </ul>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
     
     <div class="container" style="width:88%; float:left; padding-bottom: 24px;border-left: 1px solid #00abe3; border-bottom: 1px solid #00abe3;">
         <div class="row" style="margin-left:0;">
@@ -167,6 +122,8 @@ jq(function(){
     
     
 </div>
+
+
 
 
 <style>
@@ -205,12 +162,27 @@ jq(function(){
 		height: auto;
 	}
 	.flip .back {
-		background: #00abe3;
+		background: #2184cd;
 		color: #fff;
 		text-align: center;
 	}
-	.flip .back a{
-		color:#FFF;
+	.bodySection{
+		text-align:left;
+	}
+	.bodySection ol{
+		list-style: initial;
+    margin: initial;
+    padding: 0 0 0 40px;
+	}
+	
+	.bodySection ul{
+		list-style: initial;
+    margin: initial;
+    padding: 0 0 0 40px;
+	}
+	
+	.bodySection li{
+		display: list-item;
 	}
 </style>
 

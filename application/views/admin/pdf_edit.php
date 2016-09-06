@@ -2,11 +2,11 @@
 defined('BASEPATH') OR exit('No direct script access allowed'); $this->session->set_userdata('previous_page', current_url());
 ?>
 <?php
-	foreach($single_pdf as $row)
-	{
-		$name=$row->name;
-		$pdf_file=$row->pdf_file;
-	}
+
+		$name=$single_pdf[0]['name'];
+		$pdf_file=$single_pdf[0]['pdf_file'];
+		$slug=$single_pdf[0]['slug'];
+
 ?>
 
 <!-- page content -->
@@ -76,7 +76,8 @@ defined('BASEPATH') OR exit('No direct script access allowed'); $this->session->
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                         	<button type="submit" class="btn btn-success">Submit</button>
-                          	<button type="submit" class="btn btn-primary">Cancel</button>
+                          	<button type="reset" class="btn btn-primary">Cancel</button>
+                            <a href="<?php echo site_url('admin/seo_keyword_page_final/'.$name.'/'.$slug);?>" class="btn btn-primary">SEO Keywords</a>
                         </div>
                       </div>
 

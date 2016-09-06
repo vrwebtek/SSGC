@@ -1,16 +1,15 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); $this->session->set_userdata('previous_page', current_url());
-foreach($mql as $ql)
-{
-	$id=$ql->id;
-	$quick_link=$ql->quick_link;
-	$body=$ql->body;
-	$bgi=$ql->bgi;
-	$bgit=$ql->bgit;
-}
-foreach($default_mn_bg as $def)
-{
-	$default_menu_bg=$def->image;
-}
+
+	$id=$mql[0]['id'];
+	$quick_link=$mql[0]['quick_link'];
+	$body=$mql[0]['body'];
+	$bgi=$mql[0]['bgi'];
+	$bgit=$mql[0]['bgit'];
+	$slug=$mql[0]['slug'];
+
+
+	$default_menu_bg=$default_mn_bg[0]['image'];
+
 ?>
 
 <!-- page content -->
@@ -116,7 +115,8 @@ foreach($default_mn_bg as $def)
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                         	<button type="submit" class="btn btn-success">Submit</button>
                           	<button type="reset" class="btn btn-primary">Cancel</button>
-                            <a href="<?php echo site_url('admin/menu_ql_delete/'.$mn->id); ?>" class="btn btn-danger">Delete</a>
+                            <a href="<?php echo site_url('admin/menu_ql_delete/'.$id); ?>" class="btn btn-danger">Delete</a>
+                            <a href="<?php echo site_url('admin/seo_keyword_page_final/'.$quick_link.'/'.$slug);?>" class="btn btn-primary">SEO Keywords</a>
                         </div>
                       </div>
 

@@ -128,7 +128,7 @@ $is_menu_page = $this->router->fetch_class() === 'page' ? true : false;
                                   $slug=$row->slug;
                               
                           ?>
-                          <li class="footer_li"><a class="footer_link" href="<?php echo base_url('assets/admin/pdfs/').$pdf_file; ?>"><?php echo $name; ?></a></li>
+                          <li class="footer_li"><a class="footer_link" href="<?php echo site_url("/Resources/PDF/".$slug); ?>"><?php echo $name; ?></a></li>
                           <?php
                               }
                           ?>

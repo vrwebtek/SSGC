@@ -1,16 +1,16 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); $this->session->set_userdata('previous_page', current_url());
-foreach($menu as $mn)
-{
-	$id=$mn->id;
-	$menu=$mn->menu;
-	$body=$mn->body;
-	$bgi=$mn->bgi;
-	$bgit=$mn->bgit;
-}
-foreach($default_mn_bg as $def)
-{
-	$default_menu_bg=$def->image;
-}
+
+	$id=$menu[0]['id'];
+	$menu1=$menu[0]['menu'];
+	$slug=$menu[0]['slug'];
+	$body=$menu[0]['body'];
+	$bgi=$menu[0]['bgi'];
+
+	$bgit=$menu[0]['bgit'];
+
+
+	$default_menu_bg=$default_mn_bg[0]['image'];
+
 ?>
 
 <!-- page content -->
@@ -54,7 +54,7 @@ foreach($default_mn_bg as $def)
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Menu Name<span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-2">
-                          <input type="text" id="name" name="name" value="<?php echo $menu; ?>" required class="form-control col-md-7 col-xs-12">
+                          <input type="text" id="name" name="name" value="<?php echo $menu1; ?>" required class="form-control col-md-7 col-xs-12">
                           <input type="hidden" name="id" value="<?php echo $id?>" />
                         </div>
                       </div>
@@ -115,7 +115,8 @@ foreach($default_mn_bg as $def)
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                         	<button type="submit" class="btn btn-success">Submit</button>
                           	<button type="reset" class="btn btn-primary">Cancel</button>
-                            <a href="<?php echo site_url('admin/menu_delete/'.$mn->id); ?>" class="btn btn-danger">Delete</a>
+                            <a href="<?php echo site_url('admin/menu_delete/'.$id); ?>" class="btn btn-danger">Delete</a>
+                            <a href="<?php echo site_url('admin/seo_keyword_page_final/'.$menu1.'/'.$slug);?>" class="btn btn-primary">SEO Keywords</a>
                         </div>
                       </div>
 
