@@ -1,8 +1,21 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
+
+	$tags=$seo_keywords[0]['tags'];
+	$description=$seo_keywords[0]['description'];
+	$author=$seo_keywords[0]['author'];
+	$title=$seo_keywords[0]['title'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Home</title>
+    <title><?php echo $title." | SSGC Taxpro"; ?></title>
     <meta charset="utf-8">
+    <meta name="description" content="<?php echo $description; ?>">
+	<meta name="keywords" content="<?php echo $tags; ?>">
+    <meta name="author" content="<?php echo $author; ?>">
+	<link rel="author" href="https://plus.google.com/" />
+	<link rel="canonical" href="<?php echo current_url(); ?>" />
+
     <meta name="format-detection" content="telephone=no"/>
     <link rel="icon" href="<?php echo base_url('assets/public/images/favicon.ico');?>" type="image/x-icon">
     <link rel="stylesheet" href="<?php echo base_url('assets/public/css/grid.css');?>">

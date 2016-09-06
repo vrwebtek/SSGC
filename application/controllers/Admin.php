@@ -388,6 +388,9 @@
 						$pdftext=$this->security->xss_clean($this->input->post('pdftext'));
 
 						$slug = url_title($pdftext, 'dash', TRUE);
+						/*SEO*/
+							$this->seo_keyword_page($pdftext,$slug);
+						/*SEO ends*/
 						$data=array(
 							'name'=>$pdftext,
 							'pdf_file'=>$file_name,
@@ -408,6 +411,9 @@
 					
 					$data=array('name'=>$pdftext,'slug'=>$slug);
 					$this->common->update_data('footer_pdf',$data,$id);
+					/*SEO*/
+							$this->seo_keyword_page($pdftext,$slug);
+						/*SEO ends*/
 					$previous_page = $this->session->userdata('previous_page');
 					redirect($previous_page, 'refresh');
 				}
@@ -436,8 +442,10 @@
 							
 					}
 					$data=array('pdf_file'=>$file_name,'name'=>$pdftext,'slug'=>$slug);
-					
 					$this->common->update_data('footer_pdf',$data,$id);
+					/*SEO*/
+						$this->seo_keyword_page($pdftext,$slug);
+					/*SEO ends*/
 					$previous_page = $this->session->userdata('previous_page');
 					redirect($previous_page, 'refresh');
 				}
@@ -458,7 +466,12 @@
 		
 		public function pdf_edit($id){
 			$data_array['all_pdf']=$this->common->get_all_data('footer_pdf');
-			$data_array['single_pdf']=$this->common->get_data_by_id('footer_pdf',$id);
+			$data_array['single_pdf']=$this->common->RA_get_data_by_id('footer_pdf',$id);
+			/*SEO*/
+			$title=$data_array['single_pdf'][0]['name'];
+			$slug=$data_array['single_pdf'][0]['slug'];
+			$this->seo_keyword_page($title,$slug);
+			/*SEO ends*/
 			$this->admin_template->load_template('admin/pdf_edit',$data_array);
 		}
 		public function subscribers(){
@@ -887,6 +900,7 @@
 				);
 				
 				$this->common->insert_data('menus',$data);
+				$this->seo_keyword_page($name,$slug);
 				$previous_page = $this->session->userdata('previous_page');
 				redirect($previous_page, 'refresh');
 			}
@@ -924,6 +938,7 @@
 							);
 					
 							$this->common->insert_data('menus',$data);
+							$this->seo_keyword_page($name,$slug);
 							$previous_page = $this->session->userdata('previous_page');
 							redirect($previous_page, 'refresh');
 					}
@@ -934,9 +949,14 @@
 		
 		public function menu_edit($id)
 		{
-			$data_array['menu']=$this->common->get_data_by_id('menus',$id);
+			$data_array['menu']=$this->common->RA_get_data_by_id('menus',$id);
+			/*SEO*/
+			$title=$data_array['menu'][0]['menu'];
+			$slug=$data_array['menu'][0]['slug'];
+			$this->seo_keyword_page($title,$slug);
+			/*SEO ends*/
 			$data_array['menu_ql']=$this->common->get_menu_by_mid('menus_quick_links',$id);
-			$data_array['default_mn_bg']=$this->common->get_data_by_id('home_page_our_services_background',1);
+			$data_array['default_mn_bg']=$this->common->RA_get_data_by_id('home_page_our_services_background',1);
 			$this->admin_template->load_template('admin/menu_edit',$data_array);
 		}
 		public function menu_update($id)
@@ -1028,6 +1048,7 @@
 					'bgit'=>$bgit
 				);
 				$this->common->insert_data('menus_quick_links',$data);
+				$this->seo_keyword_page($name,$slug);
 				$previous_page = $this->session->userdata('previous_page');
 				redirect($previous_page, 'refresh');
 			}
@@ -1064,6 +1085,7 @@
 								'bgit'=>$bgit
 							);
 							$this->common->insert_data('menus_quick_links',$data);
+							$this->seo_keyword_page($name,$slug);
 							$previous_page = $this->session->userdata('previous_page');
 							redirect($previous_page, 'refresh');
 					}
@@ -1071,8 +1093,13 @@
 		}
 		public function menu_ql_edit($id)
 		{
-			$data_array['mql']=$this->common->get_data_by_id('menus_quick_links',$id);
-			$data_array['default_mn_bg']=$this->common->get_data_by_id('home_page_our_services_background',1);
+			$data_array['mql']=$this->common->RA_get_data_by_id('menus_quick_links',$id);
+			/*SEO*/
+			$title=$data_array['mql'][0]['quick_link'];
+			$slug=$data_array['mql'][0]['slug'];
+			$this->seo_keyword_page($title,$slug);
+			/*SEO ends*/
+			$data_array['default_mn_bg']=$this->common->RA_get_data_by_id('home_page_our_services_background',1);
 			$this->admin_template->load_template('admin/menu_q_link_edit',$data_array);
 		}
 		public function menu_q_l_update($id)
@@ -1192,9 +1219,10 @@
 			'tags'=>$tags,
 			'description'=>$description
 			);
-			print_r($data);
-			//echo $this->common->RA_update_seo_data($title,$slug,$data);
-			
+			//print_r($data);
+			$this->common->RA_update_seo_data($title,$slug,$data);
+			$previous_page = $this->session->userdata('previous_page');
+							redirect($previous_page, 'refresh');
 		}
 		############################ common functions start here ###########################
 		public function image_resize($path,$filename,$width,$height){

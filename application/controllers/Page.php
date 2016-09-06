@@ -6,12 +6,16 @@
                 parent::__construct();
 				$data_array['menus']=$this->common->get_menu_by_mid('menus',0);
 				$data_array['submenus']=$this->common->get_submenu('menus',0);
-				$this->load->view("public/upperpart");
+				
+				
+				$lastSegment = $this->uri->total_segments();
+				$pageSlug = $this->uri->segment($lastSegment);
+				$data_array['seo_keywords']=$this->common->RA_get_data_by_slug('seo_meta',$pageSlug);
+				
+				$this->load->view("public/upperpart",$data_array);
 				$this->load->view("public/header",$data_array);
 				//echo "Dinesh URL".$this->uri->segment(3);
-				/*$lastSegment = $this->uri->total_segments();
-				$record_num = $this->uri->segment($lastSegment);
-				echo $record_num;*/
+				
 				$this->SEO();
 		}
 		private function SEO()
@@ -106,5 +110,6 @@
 				show_404();
 			}
 		}
+		
 	}
 ?>
