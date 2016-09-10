@@ -112,5 +112,11 @@
 								->update('seo_meta',$data);
 								return($this->db->affected_rows());
 		}
+		public function RA_common_where_query($tablename,$columnName,$condition)
+		{
+			$query = $this->db->where($columnName,$condition)
+								->get($tablename);
+            return $query->result_array();
+		}
 	}
 ?>

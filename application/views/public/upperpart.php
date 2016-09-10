@@ -17,6 +17,9 @@
 	<link rel="canonical" href="<?php echo current_url(); ?>" />
 
     <meta name="format-detection" content="telephone=no"/>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
     <link rel="icon" href="<?php echo base_url('assets/public/images/favicon.ico');?>" type="image/x-icon">
     <link rel="stylesheet" href="<?php echo base_url('assets/public/css/grid.css');?>">
     <link rel="stylesheet" href="<?php echo base_url('assets/public/css/style.css');?>">

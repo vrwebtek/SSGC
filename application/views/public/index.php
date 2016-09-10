@@ -212,5 +212,6 @@ jq(function(){
 	.flip .back a{
 		color:#FFF;
 	}
+	
 </style>
 
