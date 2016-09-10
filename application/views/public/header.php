@@ -13,12 +13,12 @@
                             </a>
                         </h1>
                     </div>
-                    <nav class="nav put-right">
+                    <!--<nav class="nav put-right">
                         <ul class="sf-menu">
                             <li class="current" style="margin-left: 11px !important;"><a href="index.html" style="font-size: 14px;">Home</a></li>
                             <li style="margin-left: 11px !important;">
                                 <a href="about.html" style="font-size: 14px;">About</a>
-                                <!--<ul>
+                                <ul>
                                     <li><a href="#" >Lorem ipsum</a></li>
                                     <li><a href="#">Dolor sit amet</a>
                                     <li><a href="#">Ctetur adipisicing</a>
@@ -31,12 +31,12 @@
                                             <li><a href="#">Minim veniam</a></li>
                                         </ul>
                                     </li>
-                                </ul>-->
+                                </ul>
                             </li>
                             
                             <li style="margin-left: 11px !important;"><a href="contacts.html" style="font-size: 14px;">Contacts</a></li>
                         </ul>
-                    </nav>
+                    </nav>-->
                 </div>
             </div>
         </div>
@@ -59,6 +59,7 @@
                             </li>
                             <li><a href="#">Accounting / Auditing</a></li>
                             <li><a href="#">Company Laws</a></li>-->
+                            <li><a href="<?php echo site_url('home'); ?>"><span class="glyphicon glyphicon-home"></span></a>
                             <?php
                             	foreach($menus as $mn)
 								{

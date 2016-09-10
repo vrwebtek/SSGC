@@ -178,12 +178,13 @@
 							$this->common->update_data('home_page_slider',$data,$id);
 							
 							//$this->slider();
+							$previous_page = $this->session->userdata('previous_page');
+							redirect($previous_page, 'refresh');
 			}
 			else{
 				//do nothing
 			}
-			$previous_page = $this->session->userdata('previous_page');
-			redirect($previous_page, 'refresh');
+			
 		}
 		
 		public function sliderDelete($id)
@@ -1165,6 +1166,163 @@
 			$previous_page = $this->session->userdata('previous_page');
 			redirect($previous_page, 'refresh');
 		}
+		
+		
+		public function team($type)
+		{
+			$lastSegment = $this->uri->total_segments();
+			$pageSlug = $this->uri->segment($lastSegment);
+			$data_array['types']=$pageSlug;	
+			$data_array['teams']=$this->common->RA_common_where_query('team','type',$type);
+			$this->admin_template->load_template('admin/team',$data_array);
+			
+		}
+		
+		public function add_team($type)
+		{
+			
+			$name = $this->security->xss_clean($this->input->post('name'));
+			$description = $this->input->post('description');
+			$designation = $this->input->post('designation');
+			$slug = url_title($name, 'dash', TRUE);
+			
+			if (empty($_FILES['photo']['name'])) {
+				$data=array(
+					'name'=>$name,
+					'description'=>$description,
+					'slug'=>$slug,
+					'designation'=>$designation,
+					'type'=>$type
+				);
+				
+				$this->common->insert_data('team',$data);
+				$this->seo_keyword_page($name,$slug);
+				$previous_page = $this->session->userdata('previous_page');
+				redirect($previous_page, 'refresh');
+			}
+			else{
+					$config['upload_path']          = './assets/public/images/team/'.$type.'/';
+					$config['allowed_types']        = 'jpg|gif|png';
+					$config['max_size']             = 0;
+					$config['max_width']            = 0;
+					$config['max_height']           = 0;
+					$config['remove_spaces']           = TRUE;
+					$this->load->library('upload', $config);
+					
+					if ( ! $this->upload->do_upload('photo'))
+					{
+							$error = array('error' => $this->upload->display_errors());
+	
+							$this->admin_template->load_template("admin/team/$type",$error);
+					}
+					else
+					{
+							$data = array('upload_data' => $this->upload->data());
+							$file_name=$data['upload_data']['file_name'];
+							$upload_path=$this->upload->upload_path;
+							
+							//resize the uploaded images
+							$this->image_resize($upload_path,$file_name,150,150);
+						
+							$data=array(
+								'name'=>$name,
+								'description'=>$description,
+								'slug'=>$slug,
+								'designation'=>$designation,
+								'type'=>$type,
+								'photo'=>$file_name
+							);
+					
+							$this->common->insert_data('team',$data);
+							$this->seo_keyword_page($name,$slug);
+							$previous_page = $this->session->userdata('previous_page');
+							redirect($previous_page, 'refresh');
+					}
+			}
+		}
+		
+		public function team_edit($id)
+		{
+			$data_array['single_team']=$this->common->RA_get_data_by_id('team',$id);
+			/*SEO*/
+			$title=$data_array['single_team'][0]['name'];
+			$slug=$data_array['single_team'][0]['slug'];
+			$this->seo_keyword_page($title,$slug);
+			/*SEO ends*/
+			
+			$this->admin_template->load_template('admin/team_edit',$data_array);
+		}
+		public function team_update()
+		{
+			$id = $this->security->xss_clean($this->input->post('id'));
+			$name = $this->security->xss_clean($this->input->post('name'));
+			$description = $this->input->post('description');
+			$designation = $this->input->post('designation');
+			$type = $this->input->post('type');
+			$slug = url_title($name, 'dash', TRUE);
+			
+			if (empty($_FILES['photo']['name'])) {
+				$data=array(
+					'name'=>$name,
+					'description'=>$description,
+					'slug'=>$slug,
+					'designation'=>$designation,
+					'type'=>$type
+				);
+				
+				$this->common->update_data('team',$data,$id);
+				$this->seo_keyword_page($name,$slug);
+				$previous_page = $this->session->userdata('previous_page');
+				redirect($previous_page, 'refresh');
+			}
+			else{
+					$config['upload_path']          = './assets/public/images/team/'.$type.'/';
+					$config['allowed_types']        = 'jpg|gif|png';
+					$config['max_size']             = 0;
+					$config['max_width']            = 0;
+					$config['max_height']           = 0;
+					$config['remove_spaces']           = TRUE;
+					$this->load->library('upload', $config);
+					
+					if ( ! $this->upload->do_upload('photo'))
+					{
+							$error = array('error' => $this->upload->display_errors());
+	
+							$this->admin_template->load_template("admin/team_edit/$id",$error);
+					}
+					else
+					{
+							$data = array('upload_data' => $this->upload->data());
+							$file_name=$data['upload_data']['file_name'];
+							$upload_path=$this->upload->upload_path;
+							
+							//resize the uploaded images
+							$this->image_resize($upload_path,$file_name,150,150);
+						
+							$data=array(
+								'name'=>$name,
+								'description'=>$description,
+								'slug'=>$slug,
+								'designation'=>$designation,
+								'type'=>$type,
+								'photo'=>$file_name
+							);
+					
+							$this->common->update_data('team',$data,$id);
+							$this->seo_keyword_page($name,$slug);
+							$previous_page = $this->session->userdata('previous_page');
+							redirect($previous_page, 'refresh');
+					}
+			}
+		}
+		
+		public function team_delete($id)
+		{
+			$this->common->delete_by_id('team',$id);
+			$previous_page = $this->session->userdata('previous_page');
+			redirect($previous_page, 'refresh');
+		}
+		
 		public function seo_keyword_page($title,$slug)
 		{
 			/*
@@ -1246,8 +1404,7 @@
 		
 		public function logout(){
 			$this->session->sess_destroy();
-			$previous_page = $this->session->userdata('previous_page');
-			return redirect($previous_page, 'refresh');
+			redirect('admin/login', 'refresh');
 		}
 		
 	}
